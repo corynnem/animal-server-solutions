@@ -112,18 +112,16 @@ router.post("/create", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body.user;
-  console.log("hit");
+
   try {
     let foundUser = await User.findOne({
       where: {
         username,
       },
     });
-    console.log(foundUser.password, password);
 
     if (foundUser) {
       let compare = await bcrypt.compare(password, foundUser.password);
-      console.log(compare);
       if (compare) {
         const token = jwt.sign({ id: foundUser.id }, process.env.JWT_SECRET, {
           expiresIn: 60 * 60 * 24,
