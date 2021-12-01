@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const db = require("./db");
 
@@ -10,12 +11,14 @@ const controllers = require("./controllers");
 app.use(express.json());
 
 app.use("/user", controllers.usercontroller);
+app.use("/animal", controllers.animalcontroller)
+
 
 db.authenticate()
   .then(() => db.sync()) // => {force: true}
   .then(() => {
-    app.listen(3000, () =>
-      console.log(`[Server: ] App is listening on Port ${3000}`)
+    app.listen(8080, () =>
+      console.log(`[Server: ] App is listening on Port ${8080}`)
     );
   })
   .catch((err) => {
